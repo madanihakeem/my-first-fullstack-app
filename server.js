@@ -47,12 +47,14 @@ app.get("/", (req, res) => {
   );
 });
 
-// فارم دکھانے کا روٹ
-app.get("form action="https://my-first-fullstack-app.vercel.app" method="POST" ...", (req, res) => {
+// 1. فارم دکھانے کا بالکل درست اور صاف راستہ
+app.get("/form", (req, res) => {
   res.send(`
         <div style="max-width: 400px; margin: 50px auto; padding: 30px; background: #2c3e50; color: white; font-family: sans-serif; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: center;">
             <h2 style="color: #2ecc71;">نیا اسٹوڈنٹ فارم</h2>
-            <form action="/submit-form" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+            
+            <!-- جادو: فارم کا ایکشن اب سیدھا آپ کے لائیو ورسیل لنک پر جائے گا -->
+            <form action="https://my-first-fullstack-app.vercel.app/" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
                 <input type="text" name="studentName" placeholder="اسٹوڈنٹ کا نام لکھیں" required style="padding: 10px; border-radius: 6px; border: none; font-size: 16px;">
                 <input type="text" name="studentRole" placeholder="عہدہ (Role) لکھیں" required style="padding: 10px; border-radius: 6px; border: none; font-size: 16px;">
                 <button type="submit" style="background: #2ecc71; color: white; padding: 12px; border: none; border-radius: 6px; font-size: 18px; cursor: pointer; font-weight: bold;">ڈیٹا بیس میں سیو کریں 💾</button>
