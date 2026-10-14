@@ -8,7 +8,19 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/form",
+      "dest": "server.js"
+    },
+    {
+      "src": "/submit-form",
+      "dest": "server.js"
+    },
+    {
+      "src": "/",
       "dest": "server.js"
     }
   ]
