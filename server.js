@@ -119,7 +119,7 @@ app.get("/api/delete-student", async (req, res) => {
   }
 });
 
-// فارم کا ڈیٹا وصول کر کے ڈیٹا بیس میں سیو کرنے کا روٹ
+// فارم کا ڈیٹا وصول کر کے ڈیٹا بیس میں سیو کرنے کا بالکل درست راستہ
 app.post("/submit-form", async (req, res) => {
   try {
     const { studentName, studentRole } = req.body;
@@ -132,6 +132,7 @@ app.post("/submit-form", async (req, res) => {
 
     const savedData = await newStudent.save();
 
+    // کامیابی کا لائیو میسج جو اسکرین پر دکھایا جائے گا
     res.send(`
             <div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
                 <h1 style="color: #2ecc71;">✔ ماشاءاللہ! فارم کا ڈیٹا کلاؤڈ پر محفوظ ہو گیا ہے!</h1>
