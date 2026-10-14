@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors"); // 👈 یہ لائن یہاں ہونا لازمی ہے!
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // 👈 انٹرنیٹ ہوسٹنگ کے لیے ڈائنامک پورٹ
 
 // فارم کا ڈیٹا پڑھنے کا مڈل ویئر (MiddleWare)
 app.use(express.urlencoded({ extended: true }));
