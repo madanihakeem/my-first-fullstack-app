@@ -148,15 +148,16 @@ app.post("/", async (req, res) => {
 // 3. سرور اور کلاؤڈ ڈیٹا بیس کنکشن
 // =================================================
 // کلاؤڈ ڈیٹا بیس لنک
-const myPersonalDB =
-  "mongodb+srv://pakistan:12345@cluster0.asjxhkj.mongodb.net/student_db?retryWrites=true&w=majority";
+// Automatically read the secure link from Vercel environment configurations
+const myPersonalDB = process.env.MONGODB_URI;
 
-// ایک مضبوط اور مستحکم کنکشن فنکشن جو ورسیل پر کبھی ٹائم آؤٹ نہیں ہوگا
 const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) return; // اگر پہلے سے جڑا ہے تو دوبارہ نہ جوڑے
+  if (mongoose.connection.readyState >= 1) return;
 
+  // Explicit production connection options to prevent serverless dropouts
   return mongoose.connect(myPersonalDB, {
-    serverSelectionTimeoutMS: 10000, // 10 سیکنڈ کا ویٹ ٹائم
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
   });
 };
 
