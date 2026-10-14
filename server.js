@@ -147,19 +147,57 @@ app.post("/", async (req, res) => {
 // =================================================
 // 3. سرور اور کلاؤڈ ڈیٹا بیس کنکشن
 // =================================================
+// کلاؤڈ ڈیٹا بیس لنک
 const myPersonalDB =
-  "mongodb+srv://pakistan:pakistan123456@cluster0.asjxhkj.mongodb.net/student_db?appName=Cluster0";
+  "mongodb+srv://pakistan:12345@cluster0.asjxhkj.mongodb.net/student_db?retryWrites=true&w=majority";
 
-mongoose
-  .connect(myPersonalDB)
-  .then(() => {
-    console.log(
-      "✔ الحمد للہ! میرا اپنا کلاؤڈ ڈیٹا بیس کامیابی سے آن لائن جڑ چکا ہے! 🚀",
-    );
-  })
-  .catch((err) => {
-    console.error("❌ ڈیٹا بیس کنکشن میں مسئلہ آیا:", err);
+// ایک مضبوط اور مستحکم کنکشن فنکشن جو ورسیل پر کبھی ٹائم آؤٹ نہیں ہوگا
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return; // اگر پہلے سے جڑا ہے تو دوبارہ نہ جوڑے
+
+  return mongoose.connect(myPersonalDB, {
+    serverSelectionTimeoutMS: 10000, // 10 سیکنڈ کا ویٹ ٹائم
   });
+};
+
+// یونیورسل فارم سبمیشن ہینڈلر (اپڈیٹڈ)
+app.post("/", async (req, res) => {
+  try {
+    // فارم کا ڈیٹا پروسیس کرنے سے پہلے زبردستی کلاؤڈ ڈیٹا بیس سے رابطہ قائم کرنا
+    await connectDB();
+
+    const { studentName, studentRole } = req.body;
+
+    const newStudent = new Student({
+      name: studentName,
+      role: studentRole,
+      status: "Saved via Live Serverless Form",
+    });
+
+    const savedData = await newStudent.save();
+
+    res.send(`
+            <div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+                <h1 style="color: #2ecc71;">✔ ماشاءاللہ! فارم کا ڈیٹا کلاؤڈ پر محفوظ ہو گیا ہے!</h1>
+                <p><b>محفوظ کردہ نام:</b> ${savedData.name}</p>
+                <a href="/form" style="display: inline-block; margin-top: 20px; background: #34495e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">نیا ڈیٹا داخل کریں</a>
+            </div>
+        `);
+  } catch (err) {
+    res.status(500).send("❌ ڈیٹا محفوظ کرنے میں مسئلہ آیا: " + err.message);
+  }
+});
+
+// ڈیٹا بیس سے سارا ڈیٹا دیکھنے کا راستہ (اسے بھی محفوظ بنا دیا)
+app.get("/api/all-students", async (req, res) => {
+  try {
+    await connectDB();
+    const allStudents = await Student.find();
+    res.json(allStudents);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`=================================================`);
