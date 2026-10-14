@@ -125,7 +125,7 @@ app.post('/', (req, res) => {
     // Redirects any accidental root posts to the correct submit-form path
     res.redirect(307, '/submit-form');
 });
-
+ => {
   try {
     const { studentName, studentRole } = req.body;
 
