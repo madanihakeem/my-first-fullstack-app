@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
 });
 
 // فارم دکھانے کا روٹ
-app.get("/form", (req, res) => {
+app.get("form action="https://my-first-fullstack-app.vercel.app" method="POST" ...", (req, res) => {
   res.send(`
         <div style="max-width: 400px; margin: 50px auto; padding: 30px; background: #2c3e50; color: white; font-family: sans-serif; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: center;">
             <h2 style="color: #2ecc71;">نیا اسٹوڈنٹ فارم</h2>
