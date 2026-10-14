@@ -149,12 +149,14 @@ app.post("/", async (req, res) => {
 // =================================================
 // کلاؤڈ ڈیٹا بیس لنک
 // Automatically read the secure link from Vercel environment configurations
-const myPersonalDB = process.env.MONGODB_URI;
+// ورسیل اور کلاؤڈ نیٹ ورک کے درمیان پروٹوکول بلاک کو ختم کرنے کے لیے مستحکم لنک
+const myPersonalDB =
+  "mongodb://pakistan:12345@ac-asjxhkj-shard-00-00.asjxhkj.mongodb.net:27017,ac-asjxhkj-shard-00-01.asjxhkj.mongodb.net:27017,ac-asjxhkj-shard-00-02.asjxhkj.mongodb.net:27017/student_db?ssl=true&replicaSet=atlas-m1v6m2-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 const connectDB = async () => {
   if (mongoose.connection.readyState >= 1) return;
 
-  // Explicit production connection options to prevent serverless dropouts
+  // یہ سیٹنگز ورسیل کے سرورلیس انجن کو کلاؤڈ سے زبردستی جوڑ کر رکھیں گی
   return mongoose.connect(myPersonalDB, {
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
