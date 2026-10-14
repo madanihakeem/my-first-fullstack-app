@@ -151,7 +151,7 @@ app.post("/submit-form", async (req, res) => {
 // 3. سرور اور کلاؤڈ ڈیٹا بیس کنکشن
 // =================================================
 const myPersonalDB =
-  "mongodb+srv://pakistan:pakistan123456@cluster0.asjxhkj.mongodb.net/?appName=Cluster0";
+  "mongodb+srv://pakistan:pakistan123456@cluster0.asjxhkj.mongodb.net/student_db?appName=Cluster0";
 
 mongoose
   .connect(myPersonalDB)
