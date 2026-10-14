@@ -120,12 +120,7 @@ app.get("/api/delete-student", async (req, res) => {
 });
 
 // فارم کا ڈیٹا وصول کر کے ڈیٹا بیس میں سیو کرنے کا بالکل درست راستہ
-// Safeguard fallback for root form submissions
-app.post('/', (req, res) => {
-    // Redirects any accidental root posts to the correct submit-form path
-    res.redirect(307, '/submit-form');
-});
- => {
+app.post("/submit-form", async (req, res) => {
   try {
     const { studentName, studentRole } = req.body;
 
